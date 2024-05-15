@@ -53,7 +53,7 @@ const startTimer = () => {
 const submitPrompt = () => {
     const promptText = textInput.value.trim();
     if (promptText === "") {
-        alert("Please enter a description.");
+        alert("Var god och skriv in din prompt.");
         return;
     }
 
@@ -130,7 +130,7 @@ const resetExperience = () => {
 nameSubmitButton.addEventListener("click", () => {
     userName = nameInput.value.trim();
     if (userName === "") {
-        alert("Please enter your name.");
+        alert("Var god och skriv in ditt namn.");
         return;
     }
     userNameSpan.textContent = userName;

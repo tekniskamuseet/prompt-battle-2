@@ -25,7 +25,7 @@ body.player-2 {
     align-items: center;
 }
 #imageResult img {
-    display: block;
+    display: inline-block;
     max-width: 100%;
     height: auto;
     max-height: 60vh;

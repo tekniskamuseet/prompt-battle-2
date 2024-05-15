@@ -152,11 +152,6 @@ promptSubmitButton.addEventListener("click", () => {
     submitPrompt();
 });
 
-colorChangeButton.addEventListener("click", () => {
-    colorChange()
-});
-
-
 tryAgainButton.addEventListener("click", resetPromptForm);
 restartButton.addEventListener("click", resetExperience);
 

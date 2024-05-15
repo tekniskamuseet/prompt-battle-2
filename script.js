@@ -21,20 +21,19 @@ let apiKey = "";
 nameInput.focus();
 textInput.focus();
 
-nameInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
+nameInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
         event.preventDefault(); // Prevent the default form submission behavior
         nameSubmitButton.click(); // Simulate a click on the submit button
     }
 });
 
-textInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
+textInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
         event.preventDefault(); // Prevent the default form submission behavior
         promptSubmitButton.click(); // Simulate a click on the submit button
     }
 });
-
 
 const startTimer = () => {
     let timeLeft = 60;
@@ -97,6 +96,7 @@ const submitPrompt = () => {
         })
         .catch((error) => {
             console.error("Error:", error);
+            alert(error);
         })
         .finally(() => {
             // Re-enable input and button

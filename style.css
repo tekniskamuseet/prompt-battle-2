@@ -1,0 +1,27 @@
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+#inputForm, #promptForm, #imageResult {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+#imageResult img {
+    max-width: 100%;
+    height: auto;
+}
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+.timer {
+    margin-top: 10px;
+    font-size: 1.2em;
+}

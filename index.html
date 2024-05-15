@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Image with DALL-E 3</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="nameForm">
+        <h1>Prompt Battle</h1>
+        <input type="text" id="nameInput" placeholder="Skriv ditt namn...">
+        <button id="nameSubmitButton">Starta</button>
+    </div>
 
+    <div id="promptForm">
+        <h1>Hej, <span id="userName"></span>!</h1>
+        <input type="text" id="textInput" placeholder="Skriv din prompt...">
+        <button id="promptSubmitButton">Submit Prompt</button>
+        <div id="errorMessage" class="error-message"></div>
+        <div id="timer" class="timer">60</div>
+    </div>
+
+    <div id="imageResult">
+        <h1>Generated Image</h1>
+        <img id="generatedImage" src="" alt="Generated Image">
+        <button id="tryAgainButton">Try Again</button>
+        <button id="restartButton">Restart</button>
+    </div>
+</body>
+</html>

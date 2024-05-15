@@ -10,6 +10,7 @@ const textInput = getElement("textInput");
 const promptSubmitButton = getElement("promptSubmitButton");
 const generatedImage = getElement("generatedImage");
 const tryAgainButton = getElement("tryAgainButton");
+const colorChangeButton = getElement("colorChangeButton");
 const restartButton = getElement("restartButton");
 const errorMessage = getElement("errorMessage");
 const timerDisplay = getElement("timer");
@@ -64,6 +65,8 @@ const submitPrompt = () => {
     const url = "https://api.openai.com/v1/images/generations";
 
     const data = {
+        model: "dall-e-3",
+        quality: "hd",
         prompt: promptText,
         n: 1,
         size: "1024x1024",
@@ -89,10 +92,10 @@ const submitPrompt = () => {
         })
         .then((result) => {
             const imageUrl = result.data[0].url;
-
+            imageResult.querySelector("h1").textContent = `"${promptText}"`;
             generatedImage.src = imageUrl;
             promptForm.style.display = "none";
-            imageResult.style.display = "flex";
+            imageResult.style.display = "block";
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -110,7 +113,7 @@ const resetPromptForm = () => {
     textInput.value = "";
     generatedImage.src = "";
     imageResult.style.display = "none";
-    promptForm.style.display = "flex";
+    promptForm.style.display = "block";
     startTimer();
 };
 
@@ -124,7 +127,11 @@ const resetExperience = () => {
     timerDisplay.textContent = "60";
     imageResult.style.display = "none";
     promptForm.style.display = "none";
-    nameForm.style.display = "flex";
+    nameForm.style.display = "block";
+};
+
+const colorChange = () => {
+    document.body.classList.toggle("player-2");
 };
 
 nameSubmitButton.addEventListener("click", () => {
@@ -135,7 +142,7 @@ nameSubmitButton.addEventListener("click", () => {
     }
     userNameSpan.textContent = userName;
     nameForm.style.display = "none";
-    promptForm.style.display = "flex";
+    promptForm.style.display = "block";
     textInput.focus();
     startTimer();
 });
@@ -144,6 +151,11 @@ promptSubmitButton.addEventListener("click", () => {
     clearInterval(countdown); // Clear the timer when "Submit Prompt" is clicked
     submitPrompt();
 });
+
+colorChangeButton.addEventListener("click", () => {
+    colorChange()
+});
+
 
 tryAgainButton.addEventListener("click", resetPromptForm);
 restartButton.addEventListener("click", resetExperience);

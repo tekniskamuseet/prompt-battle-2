@@ -17,7 +17,7 @@ const timerDisplay = getElement("timer");
 
 let userName = "";
 let countdown;
-let apiKey = "";
+let socket;
 
 nameInput.focus();
 textInput.focus();
@@ -53,7 +53,7 @@ const startTimer = () => {
 const submitPrompt = () => {
     const promptText = textInput.value.trim();
     if (promptText === "") {
-        alert("Var god och skriv in din prompt.");
+        alert("Please enter your prompt.");
         return;
     }
 
@@ -62,50 +62,13 @@ const submitPrompt = () => {
     promptSubmitButton.disabled = true;
     errorMessage.textContent = "";
 
-    const url = "https://api.openai.com/v1/images/generations";
-
     const data = {
-        model: "dall-e-3",
-        quality: "hd",
-        prompt: promptText,
-        n: 1,
-        size: "1024x1024",
+        prompt: promptText
     };
 
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify(data),
-    })
-        .then((response) => {
-            if (!response.ok) {
-                return response.json().then((errorData) => {
-                    if (errorData.error && errorData.error.message) {
-                        throw new Error(errorData.error.message);
-                    }
-                });
-            }
-            return response.json();
-        })
-        .then((result) => {
-            const imageUrl = result.data[0].url;
-            imageResult.querySelector("h1").textContent = `"${promptText}"`;
-            generatedImage.src = imageUrl;
-            promptForm.style.display = "none";
-            imageResult.style.display = "block";
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-            alert(error);
-        })
-        .finally(() => {
-            // Re-enable input and button
-            textInput.disabled = false;
-            promptSubmitButton.disabled = false;
-        });
+    console.log(data)
+
+    socket.send(JSON.stringify(data));
 };
 
 const resetPromptForm = () => {
@@ -137,7 +100,7 @@ const colorChange = () => {
 nameSubmitButton.addEventListener("click", () => {
     userName = nameInput.value.trim();
     if (userName === "") {
-        alert("Var god och skriv in ditt namn.");
+        alert("Please enter your name.");
         return;
     }
     userNameSpan.textContent = userName;
@@ -155,12 +118,30 @@ promptSubmitButton.addEventListener("click", () => {
 tryAgainButton.addEventListener("click", resetPromptForm);
 restartButton.addEventListener("click", resetExperience);
 
-// Load the API key from the external config.json file
-fetch("config.json")
-    .then((response) => response.json())
-    .then((data) => {
-        apiKey = data.OPENAI_API_KEY;
-    })
-    .catch((error) => {
-        console.error("Error loading API key:", error);
-    });
+// WebSocket connection to Glitch server
+socket = new WebSocket("wss://prompt-battle-server.glitch.me");
+
+socket.onopen = function(event) {
+    console.log("WebSocket connection established.");
+};
+
+socket.onmessage = function(event) {
+    const message = JSON.parse(event.data);
+    const promptText = message.prompt;
+    const imageUrl = message.imageUrl;
+
+    if (promptText && imageUrl) {
+        imageResult.querySelector("h1").textContent = `"${promptText}"`;
+        generatedImage.src = imageUrl;
+        promptForm.style.display = "none";
+        imageResult.style.display = "block";
+    }
+};
+
+socket.onclose = function(event) {
+    console.log("WebSocket connection closed.");
+};
+
+socket.onerror = function(error) {
+    console.error("WebSocket error:", error);
+};

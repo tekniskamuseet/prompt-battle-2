@@ -1,48 +1,34 @@
 const getElement = (id) => document.getElementById(id);
 
-const nameForm = getElement("nameForm");
-const promptForm = getElement("promptForm");
-const imageResult = getElement("imageResult");
-const userNameSpan = getElement("userName");
-const nameInput = getElement("nameInput");
-const nameSubmitButton = getElement("nameSubmitButton");
-const textInput = getElement("textInput");
-const promptSubmitButton = getElement("promptSubmitButton");
-const generatedImage = getElement("generatedImage");
-const tryAgainButton = getElement("tryAgainButton");
-const colorChangeButton = getElement("colorChangeButton");
-const restartButton = getElement("restartButton");
-const errorMessage = getElement("errorMessage");
-const timerDisplay = getElement("timer");
+const elements = {
+    nameForm: getElement("nameForm"),
+    promptForm: getElement("promptForm"),
+    score: getElement("score"),
+    imageResult: getElement("imageResult"),
+    userNameSpan: getElement("userName"),
+    nameInput: getElement("nameInput"),
+    resetClientsButton: getElement("resetClientsButton"),
+    nameSubmitButton: getElement("nameSubmitButton"),
+    textInput: getElement("textInput"),
+    promptSubmitButton: getElement("promptSubmitButton"),
+    generatedImage: getElement("generatedImage"),
+    tryAgainButton: getElement("tryAgainButton"),
+    colorChangeButton: getElement("colorChangeButton"),
+    restartButton: getElement("restartButton"),
+    errorMessage: getElement("errorMessage"),
+    timerDisplay: getElement("timer"),
+};
 
-let userName = "";
 let countdown;
-let socket;
-
-nameInput.focus();
-textInput.focus();
-
-nameInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default form submission behavior
-        nameSubmitButton.click(); // Simulate a click on the submit button
-    }
-});
-
-textInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default form submission behavior
-        promptSubmitButton.click(); // Simulate a click on the submit button
-    }
-});
+let socket = new WebSocket("wss://prompt-battle-server.glitch.me");
+let userName = "";
 
 const startTimer = () => {
     let timeLeft = 60;
-    timerDisplay.textContent = timeLeft;
+    elements.timerDisplay.textContent = timeLeft;
 
     countdown = setInterval(() => {
-        timeLeft--;
-        timerDisplay.textContent = timeLeft;
+        elements.timerDisplay.textContent = --timeLeft;
         if (timeLeft <= 0) {
             clearInterval(countdown);
             submitPrompt();
@@ -50,98 +36,113 @@ const startTimer = () => {
     }, 1000);
 };
 
+const clearTimer = () => clearInterval(countdown);
+
+const focusInput = (input) => input.focus();
+
+const handleKeyPress = (input, button) => {
+    input.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            button.click();
+        }
+    });
+};
+
+const resetForm = (fullReset = false) => {
+    clearTimer();
+    elements.textInput.value = "";
+    elements.generatedImage.src = "";
+    elements.imageResult.style.display = "none";
+    elements.promptForm.style.display = "block";
+    elements.textInput.disabled = false;
+    elements.promptSubmitButton.disabled = false;
+    elements.errorMessage.textContent = "";
+    if (fullReset) {
+        elements.nameInput.value = "";
+        elements.nameInput.focus();
+        elements.errorMessage.textContent = "";
+        elements.timerDisplay.textContent = "60";
+        elements.nameForm.style.display = "block";
+        elements.promptForm.style.display = "none";
+    } else {
+        startTimer();
+    }
+};
+
 const submitPrompt = () => {
-    const promptText = textInput.value.trim();
-    if (promptText === "") {
+    const promptText = elements.textInput.value.trim();
+    if (!promptText) {
         alert("Please enter your prompt.");
         return;
     }
 
-    // Disable input and button
-    textInput.disabled = true;
-    promptSubmitButton.disabled = true;
-    errorMessage.textContent = "";
+    elements.textInput.disabled = true;
+    elements.promptSubmitButton.disabled = true;
+    elements.errorMessage.textContent = "";
+    clearTimer();
 
-    const data = {
-        prompt: promptText
-    };
-
-    console.log(data)
-
-    socket.send(JSON.stringify(data));
+    socket.send(
+        JSON.stringify({
+            type: "generateImage",
+            payload: { prompt: promptText },
+        })
+    );
 };
 
-const resetPromptForm = () => {
-    clearInterval(countdown); // Clear the timer when resetting the prompt form
-    textInput.value = "";
-    generatedImage.src = "";
-    imageResult.style.display = "none";
-    promptForm.style.display = "block";
-    startTimer();
+const handleSocketMessage = (event) => {
+    console.log(event)
+    const data = JSON.parse(event.data);
+    const type = data.type;
+
+    switch (type) {
+        case "imageGenerated":
+            elements.imageResult.querySelector("h1").textContent = `"${data.prompt}"`;
+            elements.generatedImage.src = data.imageUrl;
+            elements.promptForm.style.display = "none";
+            elements.imageResult.style.display = "block";
+            break;
+        case "reset":
+            location.reload()
+            break;
+        case "setScore":
+            elements.score.textContent = data.score;
+            break;
+        case "error":
+            elements.errorMessage.textContent = data.message;
+            elements.textInput.disabled = false;
+            elements.promptSubmitButton.disabled = false;
+            break;
+        default:
+            console.warn("Unknown message type received:", type);
+            break;
+    }
 };
 
-const resetExperience = () => {
-    clearInterval(countdown); // Clear the timer when resetting the experience
-    textInput.value = "";
-    nameInput.value = "";
-    nameInput.focus();
-    generatedImage.src = "";
-    errorMessage.textContent = "";
-    timerDisplay.textContent = "60";
-    imageResult.style.display = "none";
-    promptForm.style.display = "none";
-    nameForm.style.display = "block";
-};
-
-const colorChange = () => {
-    document.body.classList.toggle("player-2");
-};
-
-nameSubmitButton.addEventListener("click", () => {
-    userName = nameInput.value.trim();
-    if (userName === "") {
+// Event listeners for UI interactions
+elements.nameSubmitButton.addEventListener("click", () => {
+    userName = elements.nameInput.value.trim();
+    if (!userName) {
         alert("Please enter your name.");
         return;
     }
-    userNameSpan.textContent = userName;
-    nameForm.style.display = "none";
-    promptForm.style.display = "block";
-    textInput.focus();
+    elements.userNameSpan.textContent = userName;
+    elements.nameForm.style.display = "none";
+    elements.promptForm.style.display = "block";
+    focusInput(elements.textInput);
     startTimer();
 });
 
-promptSubmitButton.addEventListener("click", () => {
-    clearInterval(countdown); // Clear the timer when "Submit Prompt" is clicked
-    submitPrompt();
-});
+elements.promptSubmitButton.addEventListener("click", submitPrompt);
+elements.tryAgainButton.addEventListener("click", () => resetForm());
+elements.restartButton.addEventListener("click", () => resetForm(true));
+elements.colorChangeButton.addEventListener("click", () => document.body.classList.toggle("player-2"));
 
-tryAgainButton.addEventListener("click", resetPromptForm);
-restartButton.addEventListener("click", resetExperience);
+handleKeyPress(elements.nameInput, elements.nameSubmitButton);
+handleKeyPress(elements.textInput, elements.promptSubmitButton);
 
-// WebSocket connection to Glitch server
-socket = new WebSocket("wss://prompt-battle-server.glitch.me");
-
-socket.onopen = function(event) {
-    console.log("WebSocket connection established.");
-};
-
-socket.onmessage = function(event) {
-    const message = JSON.parse(event.data);
-    const promptText = message.prompt;
-    const imageUrl = message.imageUrl;
-
-    if (promptText && imageUrl) {
-        imageResult.querySelector("h1").textContent = `"${promptText}"`;
-        generatedImage.src = imageUrl;
-        promptForm.style.display = "none";
-        imageResult.style.display = "block";
-    }
-};
-
-socket.onclose = function(event) {
-    console.log("WebSocket connection closed.");
-};
-
-socket.onerror = function(error) {
-    console.error("WebSocket error:", error);
-};
+// WebSocket event listeners
+socket.addEventListener("open", () => console.log("WebSocket connection established."));
+socket.addEventListener("message", handleSocketMessage);
+socket.addEventListener("close", () => console.log("WebSocket connection closed."));
+socket.addEventListener("error", (error) => console.error("WebSocket error:", error));

@@ -184,7 +184,7 @@ const handleSocketMessage = (event) => {
                 "--p2_score",
                 `"${payload.p2_score}"`
             );
-            payload.p_score = parseInt(payload.p1_score);
+            payload.p1_score = parseInt(payload.p1_score);
             payload.p2_score = parseInt(payload.p2_score);
             if (pid == 1 && payload.p1_score > p1_score) {
                 playSound("scoreIncreaseAudio");

@@ -36,10 +36,10 @@ body[data-pid="2"] {
     background-color: var(--p2_color, blue);
     color: var(--color_dark);
 }
-body[data-pid="1"] #score::after {
+body[data-pid="1"] #playerScore::after {
     content: var(--p1_score, "0");
 }
-body[data-pid="2"] #score::after {
+body[data-pid="2"] #playerScore::after {
     content: var(--p2_score, "0");
 }
 

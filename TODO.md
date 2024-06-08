@@ -1,6 +1,0 @@
-- Integrera nytt AI API kopplat till eget Tekniska-konto
-- varningsystem olämpliga ord - nån skojjig varning kan ploppa upp om Dall.e filtret aktiveras. (nu crashar det och en behöver refresha sidan)
-- Går det att fixa så det går att skriva direkt utan att klicka i rutan en skriver i först? Så 'markören' är aktiverad så att säga. 
-- Fixa så en inte behöver skriva in namn efter varje omgång - räcker var tredje
-- tidsangivelse, timer/nedräkning. Extra: efter 60 sek så genereras prompten automatiskt. 
-- poängsystem - förslag: kopplad till två fysiska knappar, vardera går till vardera webbläsare. 

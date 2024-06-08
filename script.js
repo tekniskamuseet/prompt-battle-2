@@ -189,6 +189,9 @@ const handleSocketMessage = (event) => {
             if (pid == 1 && payload.p1_score > p1_score) {
                 playSound("scoreIncreaseAudio");
             }
+            if (pid == 2 && payload.p2_score > p2_score) {
+                playSound("scoreIncreaseAudio");
+            }
             localStorage.setItem("p1_score", payload.p1_score);
             localStorage.setItem("p2_score", payload.p2_score);
             p1_score = payload.p1_score;

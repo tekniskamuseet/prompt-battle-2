@@ -4,49 +4,60 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Prompt Battle</title>
-        <script src="script.js" defer></script>
+        <script module src="script.js" defer></script>
         <link rel="stylesheet" href="style.css" />
     </head>
-    <body>
+    <body data-step="1">
         <header>
+            <img src="logo.png" />
             <h1>Prompt Battle</h1>
-            <div id="score"></div>
         </header>
+        <aside>
+            <div id="playerName">Spelare</div>
+            <div id="playerScore">Poäng</div>
+        </aside>
+        <main>
+            <section id="step-1">
+                <div class="inputs">
+                    <input
+                        type="text"
+                        id="nameInput"
+                        placeholder="Skriv ditt namn..."
+                    />
+                    <button id="nameSubmitButton">Starta battle</button>
+                </div>
+            </section>
 
-        <div id="nameForm">
-            <h1>Välkommen</h1>
-            <input
-                type="text"
-                id="nameInput"
-                placeholder="Skriv ditt namn..."
-            />
-            <button id="nameSubmitButton">Starta battle</button>
-        </div>
+            <section id="step-2">
+                <div class="inputs">
+                    <input
+                        type="text"
+                        id="promptInput"
+                        placeholder="Skriv din prompt..."
+                    />
+                    <button id="promptSubmitButton">Generera bild</button>
+                </div>
+            </section>
 
-        <div id="promptForm">
-            <h1>
-                Hej, <span id="userName"></span>!
-                <span id="timer" class="timer">60</span>
-            </h1>
-            <input
-                type="text"
-                id="textInput"
-                placeholder="Skriv din prompt..."
-            />
-            <button id="promptSubmitButton">Generera bild</button>
-            <div id="errorMessage" class="error-message"></div>
-        </div>
-
-        <div id="imageResult">
-            <h1></h1>
-            <img id="generatedImage" src="" />
-            <br />
-            <button id="tryAgainButton">Ny runda</button>
-            <button id="restartButton">Tillbaka till startskärmen</button>
-        </div>
+            <section id="step-3">
+                <div id="result">
+                    <h2 id="promptText"></h2>
+                    <img id="generatedImage" src="" />
+                </div>
+                <div class="inputs">
+                    <button id="tryAgainButton">Ny runda</button>
+                    <button id="restartButton">
+                        Tillbaka till startskärmen
+                    </button>
+                </div>
+            </section>
+        </main>
 
         <footer>
-            <img src="logo.png" id="colorChangeButton" />
+            <div id="timer"></div>
+            <div id="errorMessage" class="error-message"></div>
         </footer>
+        <audio id="scoreIncreaseAudio" src="scoreIncrease.wav"></audio>
+        <audio id="generatingImageAudio" src="generatingImage.wav"></audio>
     </body>
 </html>

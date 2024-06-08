@@ -1,44 +1,190 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-body {
+:root {
+    --p1_score: "0";
+    --p2_score: "0";
+}
+
+body[data-pid="1"] {
+    --color_dark: color-mix(in srgb, var(--p1_color) 30%, black);
+    --color_darker: color-mix(in srgb, var(--p1_color) 0%, black);
+    --color_light: color-mix(in srgb, var(--p1_color) 10%, white);
+    background-color: var(--p1_color, red);
+    color: var(--color_light);
+}
+body[data-pid="1"] button {
+    background-color: var(--color_dark);
+    color: var(--color_light);
+}
+body[data-pid="1"] button:not(:disabled):hover {
+    background-color: var(--color_darker);
+    color: var(--color_light);
+}
+body[data-pid="2"] button {
+    background-color: var(--color_dark);
+    color: var(--color_light);
+}
+body[data-pid="2"] button:not(:disabled):hover {
+    background-color: var(--color_darker);
+    color: var(--color_light);
+}
+
+body[data-pid="2"] {
+    --color_dark: color-mix(in srgb, var(--p2_color) 30%, black);
+    --color_darker: color-mix(in srgb, var(--p2_color) 0%, black);
+    --color_light: color-mix(in srgb, var(--p2_color) 10%, white);
+    background-color: var(--p2_color, blue);
+    color: var(--color_dark);
+}
+body[data-pid="1"] #score::after {
+    content: var(--p1_score, "0");
+}
+body[data-pid="2"] #score::after {
+    content: var(--p2_score, "0");
+}
+
+body[data-step="1"] #step-2,
+body[data-step="1"] #step-3 {
+    display: none;
+}
+body[data-step="2"] #step-1,
+body[data-step="2"] #step-3 {
+    display: none;
+}
+body[data-step="3"] #step-1,
+body[data-step="3"] #step-2 {
+    display: none;
+}
+
+html {
     font-family: "Montserrat", Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    font-size: 10px;
+}
+
+body {
     text-align: center;
     height: 100vh;
     margin: 0;
+    font-size: 4.2rem;
+    line-height:4.2rem;
+    overflow:hidden;
 }
-body:not(.player-2) footer img {
-    filter: invert(1);
+
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    font-size: inherit;
 }
-body.player-2 {
-    background-color: black;
-    color: white;
-}
-#inputForm,
-#promptForm,
-#imageResult {
-    display: none;
-    flex-direction: column;
+
+main {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    /* display: flex; */
+    /* flex-direction: column; */
     align-items: center;
+    justify-content: center;
+    text-align: center;
 }
-#imageResult img {
-    display: inline-block;
-    max-width: 100%;
-    height: auto;
-    max-height: 60vh;
+
+.inputs {
+    position:fixed;
+    width:100%;
+    bottom:8.4rem;
 }
+
+img {
+    width: 100%;
+}
+
+header,
+aside {
+    pointer-events: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* HEADER */
+
+header {
+    padding: 1rem;
+}
+
+header img {
+    max-width: 14vw;
+    display: block;
+    margin: 0 auto;
+    /* filter: invert(1); */
+}
+
+/* ASIDE */
+
+aside div {
+    position: fixed;
+    padding: 1rem;
+}
+
+#playerName {
+    top: 0;
+    left: 0;
+}
+
+#playerScore {
+    top: 0;
+    right: 0;
+}
+
+/* INPUT */
+
 button,
 input,
 textarea {
-    padding: 1em;
+    padding: 4rem 0.5em;
+    outline: 0;
     font-family: inherit;
+    font-size: inherit;
+    float: left;
+    display: block;
+    border-radius: 1rem;
+    box-sizing: border-box;
 }
-header {
-    position: fixed;
-    top: 0;
+
+input,
+textarea,
+button {
+    width: 60vw;
+}
+
+input ~ button {
+    width: 40%;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: ;
+}
+
+/* MAIN */
+#step-3 #result {
+
+}
+#step-3 img {
+    width: 100%;
+    max-height: 60vh;
+    margin-top: 20vh;
+    object-fit: contain;
+    border-radius:1rem;
+}
+
+main img:before {
+    content: attr(data-prompt);
 }
 
 /* FOOTER */
@@ -46,11 +192,17 @@ header {
 footer {
     position: fixed;
     bottom: 0;
+    line-height:8.4rem;
+    height:8.4rem;
+    font-size:50%;
     width: 100vw;
-    padding: 1em;
     box-sizing: border-box;
+    text-align: center;
+    background-color:rgba(0,0,0,0.5);
+    color:white;
 }
-footer img {
-    height: 4vh;
-    cursor:pointer;
+
+footer > * {
+    float:left;
+    width:50%;
 }

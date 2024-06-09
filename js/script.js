@@ -101,10 +101,9 @@ const handleKeyPress = (input, button) => {
 const resetForm = (fullReset = false) => {
     document.body.setAttribute("data-step", 2);
     clearTimer();
+    elements.errorMessage.textContent = "";
     elements.promptInput.value = "";
     elements.generatedImage.src = "";
-    elements.imageResult.style.display = "none";
-    elements.promptForm.style.display = "block";
     elements.promptInput.disabled = false;
     elements.promptSubmitButton.disabled = false;
     elements.errorMessage.textContent = "";
@@ -140,10 +139,7 @@ const submitPrompt = () => {
 
 elements.nameSubmitButton.addEventListener("click", () => submitName());
 elements.promptSubmitButton.addEventListener("click", () => submitPrompt());
-elements.tryAgainButton.addEventListener("click", () => {
-    elements.errorMessage.textContent = "";
-    resetForm();
-});
+elements.tryAgainButton.addEventListener("click", () => resetForm());
 elements.restartButton.addEventListener("click", () => location.reload());
 
 handleKeyPress(elements.nameInput, elements.nameSubmitButton);

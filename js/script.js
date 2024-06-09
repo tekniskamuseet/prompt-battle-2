@@ -32,7 +32,12 @@ let p2_score = localStorage.getItem("p2_score") || 0;
 document.documentElement.style.setProperty("--p1_score", `"${p1_score}"`);
 document.documentElement.style.setProperty("--p2_score", `"${p2_score}"`);
 
-const pid = localStorage.getItem("pid") || prompt("Which player ID are you (enter 1 or 2)?");
+let pid = localStorage.getItem("pid");
+
+if (typeof pid !== "number"){
+    pid = prompt("Vilket spelar-ID är du (ange 1 eller 2")
+}
+
 localStorage.setItem("pid", pid);
 console.log(`I am player ${pid}`);
 document.body.setAttribute("data-pid", pid);

@@ -7,12 +7,19 @@
 }
 
 /* Player Styles */
-body[data-pid="1"],
-body[data-pid="2"] {
+body[data-pid="1"] {
     --color_dark: color-mix(in srgb, var(--p1_color) 30%, black);
     --color_darker: color-mix(in srgb, var(--p1_color) 0%, black);
     --color_light: color-mix(in srgb, var(--p1_color) 10%, white);
     background-color: var(--p1_color, red);
+    color: var(--color_dark);
+}
+
+body[data-pid="2"] {
+    --color_dark: color-mix(in srgb, var(--p2_color) 30%, black);
+    --color_darker: color-mix(in srgb, var(--p2_color) 0%, black);
+    --color_light: color-mix(in srgb, var(--p2_color) 10%, white);
+    background-color: var(--p2_color, blue);
     color: var(--color_dark);
 }
 

@@ -34,13 +34,14 @@ document.documentElement.style.setProperty("--p2_score", `"${p2_score}"`);
 
 let pid = localStorage.getItem("pid");
 
-if (typeof pid !== "number"){
-    pid = prompt("Vilket spelar-ID är du (ange 1 eller 2")
+while (pid !== "1" && pid !== "2") {
+    pid = prompt("Vilket spelar-ID är du (ange 1 eller 2)");
 }
 
-localStorage.setItem("pid", pid);
-console.log(`I am player ${pid}`);
+localStorage.setItem("pid", parseInt(pid));
 document.body.setAttribute("data-pid", pid);
+document.documentElement.style.setProperty("--pid", `"${pid}"`);
+elements.playerName.textContent = `Spelare #${pid}:`;
 
 let socket = new WebSocket("wss://prompt-battle-server.glitch.me");
 
@@ -52,7 +53,6 @@ const submitName = () => {
         alert("Fyll i ditt namn.");
         return;
     }
-
     document.documentElement.style.setProperty("--player_name", `"${playerName}"`);
     document.body.setAttribute("data-step", 2);
     focusInput(elements.promptInput);

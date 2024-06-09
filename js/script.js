@@ -47,7 +47,8 @@ const submitName = () => {
         alert("Fyll i ditt namn.");
         return;
     }
-    elements.playerName.textContent = playerName;
+
+    document.documentElement.style.setProperty("--player_name", `"${playerName}"`);
     document.body.setAttribute("data-step", 2);
     focusInput(elements.promptInput);
     startTimer();
@@ -108,13 +109,13 @@ const resetForm = (fullReset = false) => {
 /* AI Logic */
 
 const submitPrompt = () => {
-    elements.timer.textContent = `Bilden genereras…`;
     const promptText = elements.promptInput.value.trim();
     if (!promptText) {
         alert("Fyll i din prompt.");
         return;
     }
 
+    elements.timer.textContent = `Bilden genereras…`;
     generatingImageAudio.play();
     elements.promptText.textContent = promptText;
     elements.promptInput.disabled = true;
@@ -227,3 +228,5 @@ const playSound = (sound) => {
     console.log("playSound", sound);
     elements[sound].play();
 };
+
+focusInput(elements.nameInput);

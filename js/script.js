@@ -221,7 +221,7 @@ const playSound = (sound) => {
 
 focusInput(nameInput);
 
-const fadeAudio = (audio, type, duration = 400) => {
+const fadeAudio = (audio, type, duration = 600) => {
     const stepTime = 50; // Adjust the step time for smoother transitions
     const stepAmount = stepTime / duration;
     let volume = type === "in" ? 0 : 1;

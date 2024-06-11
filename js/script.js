@@ -18,6 +18,7 @@ const elements = (() => {
         "restartButton",
         "scoreIncreaseAudio",
         "generatingImageAudio",
+        "generatingImageVideo",
     ];
     const query = (id) => document.querySelector(`#${id}`);
     return ids.reduce((acc, id) => ({ ...acc, [id]: query(id) }), {});
@@ -33,6 +34,8 @@ const {
     nameSubmitButton,
     tryAgainButton,
     restartButton,
+    generatingImageAudio,
+    generatingImageVideo,
 } = elements;
 
 const setProperty = (property, value) =>
@@ -115,6 +118,8 @@ const resetForm = () => {
     generatedImage.src = "";
     promptInput.disabled = false;
     promptSubmitButton.disabled = false;
+    promptSubmitButton.classList.remove("fade-in-out")
+    toggleVideo(generatingImageVideo)
     startTimer();
 };
 
@@ -124,10 +129,12 @@ const submitPrompt = () => {
         // alert("Fyll i din prompt.");
         return;
     }
-    fadeAudio(elements.generatingImageAudio, "in");
-    elements.promptText.textContent = promptText;
+    toggleAudio(generatingImageAudio, "in");
+    toggleVideo(generatingImageVideo)
+    promptText.textContent = promptText;
     promptInput.disabled = true;
-    promptSubmitButton.innerHTML = `<marquee scrollamount="10">Bilden genereras…</marquee>`;
+    promptSubmitButton.classList.add("fade-in-out")
+    promptSubmitButton.innerHTML = `Bilden genereras…`;
     promptSubmitButton.disabled = true;
     clearTimer();
     timer.textContent = "";
@@ -156,7 +163,7 @@ socket.addEventListener("message", (event) => {
     switch (type) {
         case "imageGenerated":
             generatedImage.src = imageUrl;
-            fadeAudio(elements.generatingImageAudio, "out");
+            toggleAudio(elements.generatingImageAudio, "out");
             generatedImage.addEventListener("load", () => {
                 generatedImage.style.opacity = 1;
             });
@@ -218,7 +225,7 @@ const playSound = (sound) => {
 
 focusInput(nameInput);
 
-const fadeAudio = (audio, type, duration = 600) => {
+const toggleAudio = (audio, type, duration = 600) => {
     const stepTime = 50; // Adjust the step time for smoother transitions
     const stepAmount = stepTime / duration;
     let volume = type === "in" ? 0 : 1;
@@ -242,4 +249,8 @@ const fadeAudio = (audio, type, duration = 600) => {
         }
         audio.volume = volume;
     }, stepTime);
+};
+
+const toggleVideo = (video) => {
+    video.classList.toggle("show")
 };

@@ -132,7 +132,7 @@ const submitPrompt = () => {
     }
     toggleAudio(generatingImageAudio, "in");
     toggleVideo(generatingImageVideo);
-    promptText.textContent = promptText;
+    elements.promptText.textContent = promptText;
     promptInput.disabled = true;
     promptSubmitButton.classList.add("fade-in-out");
     promptSubmitButton.innerHTML = `Bilden genereras…`;

@@ -9,39 +9,54 @@
     </head>
     <body data-step="1">
         <header>
+            <h1>Prompt Battle</h1>
             <div id="playerName">Spelare:</div>
             <div id="playerScore">Poäng:</div>
-                <img src="img/logo.png" alt="Prompt Battle Logo" />
         </header>
         <main>
             <section id="step-1">
-                <div class="inputs">
+                <div class="left">
                     <input
                         type="text"
                         id="nameInput"
                         placeholder="Skriv ditt namn..."
+                        maxlength="20"
                     />
+                </div>
+                <div class="right">
                     <button id="nameSubmitButton">Starta battle</button>
+                </div>
+                <div class="footer">
+                    <img id="logo" src="img/logo.png" alt="Prompt Battle Logo" />
                 </div>
             </section>
 
             <section id="step-2">
-                <div class="inputs">
-                    <input
+                <div class="left">
+                    <div
+                        class="textarea"
                         type="text"
                         id="promptInput"
                         placeholder="Skriv din prompt..."
-                    />
-                    <button id="promptSubmitButton">Generera bild</button>
+                        contenteditable="true"
+                    ></div>
+                </div>
+                <div class="right">
+                    <button id="promptSubmitButton" alt="Generera bild">Generera bild</button>
+                </div>
+                <div class="footer">
+                    <div id="timer"></div>
                 </div>
             </section>
 
             <section id="step-3">
-                <div id="result">
+                <div class="left">
                     <h2 id="promptText"></h2>
+                </div>
+                <div class="right">
                     <img id="generatedImage" src="" alt="Generated Image" />
                 </div>
-                <div class="inputs">
+                <div class="footer">
                     <button id="tryAgainButton">Ny runda</button>
                     <button id="restartButton">
                         Tillbaka till startskärmen
@@ -50,14 +65,15 @@
             </section>
         </main>
 
-        <footer>
-            <div id="timer"></div>
-            <div id="errorMessage" class="error-message"></div>
-        </footer>
-        <audio id="scoreIncreaseAudio" src="audio/scoreIncrease.wav"></audio>
+        <footer></footer>
+        <audio
+            id="scoreIncreaseAudio"
+            src="audio/Point_Bonus Win.mp3"
+        ></audio>
         <audio
             id="generatingImageAudio"
-            src="audio/generatingImage.wav"
+            src="audio/Wait_Abstract Cinematic Trip Hop Edit.mp3"
+            loop
         ></audio>
     </body>
 </html>

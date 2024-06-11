@@ -131,9 +131,10 @@ const submitPrompt = () => {
     elements.generatingImageAudio.play();
     elements.promptText.textContent = promptText;
     promptInput.disabled = true;
-    promptSubmitButton.textContent = `Bilden genereras…`;
+    promptSubmitButton.innerHTML = `<marquee>Bilden genereras…</marquee>`;
     promptSubmitButton.disabled = true;
     clearTimer();
+    timer.textContent = ""
 
     socket.send(
         JSON.stringify({

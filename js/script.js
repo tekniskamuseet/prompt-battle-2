@@ -160,6 +160,9 @@ socket.addEventListener("message", (event) => {
     switch (type) {
         case "imageGenerated":
             generatedImage.src = imageUrl;
+            generatedImage.addEventListener('load', () => {
+                generatedImage.style.opacity = 1;
+            });
             timer.textContent = "";
             elements.generatingImageAudio.pause();
             elements.generatingImageAudio.currentTime = 0;

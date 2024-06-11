@@ -225,7 +225,7 @@ img#generatedImage {
     position: absolute;
     z-index: 1;
     width: 50%;
-    height: 100%;
+    height: 75%;
     opacity: 1;
     background-image: url(../img/Wait_loading-alpha150.gif);
     background-size: 20%;

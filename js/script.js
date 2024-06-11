@@ -28,6 +28,7 @@ const {
     playerName,
     nameInput,
     promptInput,
+    promptText,
     promptSubmitButton,
     timer,
     generatedImage,
@@ -118,8 +119,8 @@ const resetForm = () => {
     generatedImage.src = "";
     promptInput.disabled = false;
     promptSubmitButton.disabled = false;
-    promptSubmitButton.classList.remove("fade-in-out")
-    toggleVideo(generatingImageVideo)
+    promptSubmitButton.classList.remove("fade-in-out");
+    toggleVideo(generatingImageVideo);
     startTimer();
 };
 
@@ -130,10 +131,10 @@ const submitPrompt = () => {
         return;
     }
     toggleAudio(generatingImageAudio, "in");
-    toggleVideo(generatingImageVideo)
+    toggleVideo(generatingImageVideo);
     promptText.textContent = promptText;
     promptInput.disabled = true;
-    promptSubmitButton.classList.add("fade-in-out")
+    promptSubmitButton.classList.add("fade-in-out");
     promptSubmitButton.innerHTML = `Bilden genereras…`;
     promptSubmitButton.disabled = true;
     clearTimer();
@@ -252,5 +253,5 @@ const toggleAudio = (audio, type, duration = 600) => {
 };
 
 const toggleVideo = (video) => {
-    video.classList.toggle("show")
+    video.classList.toggle("show");
 };

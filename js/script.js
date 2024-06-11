@@ -131,7 +131,7 @@ const submitPrompt = () => {
     elements.generatingImageAudio.play();
     elements.promptText.textContent = promptText;
     promptInput.disabled = true;
-    promptSubmitButton.innerHTML = `<marquee>Bilden genereras…</marquee>`;
+    promptSubmitButton.innerHTML = `<marquee scrollamount="10">Bilden genereras…</marquee>`;
     promptSubmitButton.disabled = true;
     clearTimer();
     timer.textContent = ""

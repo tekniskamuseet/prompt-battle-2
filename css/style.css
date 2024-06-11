@@ -135,6 +135,7 @@ input,
     font-size: inherit;
     display: block;
     box-sizing: border-box;
+    caret-color: transparent;
 }
 
 button {

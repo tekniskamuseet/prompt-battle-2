@@ -212,7 +212,7 @@ img#generatedImage {
     clear: both;
     line-height: var(--height);
     height: var(--height);
-    font-size: 50%;
+    font-size: 2vw;
     width: 100vw;
     box-sizing: border-box;
     text-align: center;

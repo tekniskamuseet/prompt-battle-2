@@ -134,7 +134,7 @@ const submitPrompt = () => {
     promptSubmitButton.innerHTML = `<marquee scrollamount="10">Bilden genereras…</marquee>`;
     promptSubmitButton.disabled = true;
     clearTimer();
-    timer.textContent = ""
+    timer.textContent = "";
 
     socket.send(
         JSON.stringify({
@@ -160,7 +160,7 @@ socket.addEventListener("message", (event) => {
     switch (type) {
         case "imageGenerated":
             generatedImage.src = imageUrl;
-            generatedImage.addEventListener('load', () => {
+            generatedImage.addEventListener("load", () => {
                 generatedImage.style.opacity = 1;
             });
             timer.textContent = "";

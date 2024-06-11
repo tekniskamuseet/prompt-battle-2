@@ -16,7 +16,6 @@ const elements = (() => {
         "generatedImage",
         "tryAgainButton",
         "restartButton",
-        "errorMessage",
         "scoreIncreaseAudio",
         "generatingImageAudio",
     ];
@@ -30,7 +29,6 @@ const {
     promptInput,
     promptSubmitButton,
     timer,
-    errorMessage,
     generatedImage,
     nameSubmitButton,
     tryAgainButton,
@@ -86,7 +84,7 @@ const startTimer = () => {
         setTimer(--timeLeft);
         if (timeLeft <= 0) {
             clearInterval(countdown);
-            submitPrompt();
+            // submitPrompt();
         }
     }, 1000);
 };
@@ -113,7 +111,6 @@ const handleKeyPress = (input, button) => {
 const resetForm = () => {
     document.body.setAttribute("data-step", 2);
     clearTimer();
-    errorMessage.textContent = "";
     promptInput.textContent = "";
     generatedImage.src = "";
     promptInput.disabled = false;
@@ -195,7 +192,7 @@ socket.addEventListener("message", (event) => {
             break;
         case "error":
             alert(
-                "Oops! Det verkar som att din prompt fick DALL-E att rodna. Städa upp och försök igen!"
+                "Oops! Det verkar som att din prompt fick DALL-E slå bakut. Städa upp och försök igen!"
             );
             promptSubmitButton.textContent =
                 promptSubmitButton.getAttribute("alt");

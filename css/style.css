@@ -146,7 +146,7 @@ input,
 .textarea {
     background-color: unset;
     text-wrap: wrap;
-    color: var(--color_darker);
+    color: var(--color_light);
 }
 
 .textarea {
@@ -206,6 +206,7 @@ img#generatedImage {
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
+    color: var(--color_light);
 }
 
 .footer {

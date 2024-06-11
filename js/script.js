@@ -127,8 +127,7 @@ const submitPrompt = () => {
         // alert("Fyll i din prompt.");
         return;
     }
-
-    elements.generatingImageAudio.play();
+    fadeAudio(elements.generatingImageAudio, "in");
     elements.promptText.textContent = promptText;
     promptInput.disabled = true;
     promptSubmitButton.innerHTML = `<marquee scrollamount="10">Bilden genereras…</marquee>`;
@@ -160,12 +159,11 @@ socket.addEventListener("message", (event) => {
     switch (type) {
         case "imageGenerated":
             generatedImage.src = imageUrl;
+            fadeAudio(elements.generatingImageAudio, "out");
             generatedImage.addEventListener("load", () => {
                 generatedImage.style.opacity = 1;
             });
             timer.textContent = "";
-            elements.generatingImageAudio.pause();
-            elements.generatingImageAudio.currentTime = 0;
             document.body.setAttribute("data-step", 3);
             break;
         case "reset":
@@ -222,3 +220,29 @@ const playSound = (sound) => {
 };
 
 focusInput(nameInput);
+
+const fadeAudio = (audio, type, duration = 400) => {
+    const stepTime = 50; // Adjust the step time for smoother transitions
+    const stepAmount = stepTime / duration;
+    let volume = type === "in" ? 0 : 1;
+    audio.volume = volume;
+    audio.play();
+
+    const fade = setInterval(() => {
+        if (type === "in") {
+            volume += stepAmount;
+            if (volume >= 1) {
+                volume = 1;
+                clearInterval(fade);
+            }
+        } else {
+            volume -= stepAmount;
+            if (volume <= 0) {
+                volume = 0;
+                clearInterval(fade);
+                audio.pause();
+            }
+        }
+        audio.volume = volume;
+    }, stepTime);
+};

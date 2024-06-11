@@ -137,14 +137,6 @@ input,
     box-sizing: border-box;
 }
 
-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background-color: var(--color_darker);
-    mix-blend-mode: color-burn;
-}
-
 button {
     text-align: center;
     cursor: pointer;
@@ -172,6 +164,10 @@ input,
     content: attr(placeholder);
     color: var(--color_dark);
     opacity: 0.5;
+}
+
+[disabled] {
+    pointer-events: none;
 }
 
 /* Main */
@@ -223,9 +219,4 @@ img#generatedImage {
 .footer:has(> :nth-child(2)) > * {
     float: left;
     width: 50%;
-}
-
-/* Other */
-[disabled] {
-    pointer-events: none;
 }

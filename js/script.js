@@ -170,7 +170,7 @@ socket.addEventListener("message", (event) => {
     const { type, room, payload, imageUrl } = JSON.parse(event.data);
     console.log(type, room, payload, imageUrl);
     roomValue = getRoomParam();
-    if (roomValue && room != roomValue) return;
+    if (roomValue && room !== roomValue) return;
     switch (type) {
         case "imageGenerated":
             generatedImage.src = imageUrl;

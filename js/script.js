@@ -198,6 +198,7 @@ socket.addEventListener("message", (event) => {
         case "setDuration":
             localStorage.setItem("duration", `"${payload.duration}"`);
             duration = payload.duration;
+            console.log(duration)
             break;
         case "error":
             alert(

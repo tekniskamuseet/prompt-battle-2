@@ -216,7 +216,11 @@ socket.addEventListener("message", (event) => {
             promptSubmitButton.textContent =
                 promptSubmitButton.getAttribute("alt");
             promptInput.disabled = false;
+            toggleAudio(generatingImageAudio, "out");
+            toggleVideo(generatingImageVideo);
+            promptSubmitButton.classList.remove("fade-in-out");
             promptSubmitButton.disabled = false;
+            promptSubmitButton.innerHTML = promptSubmitButton.getAttribute("alt");
             startTimer();
             break;
         default:

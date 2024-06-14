@@ -95,7 +95,7 @@ const startTimer = () => {
         setTimer(--timeLeft);
         if (timeLeft <= 0) {
             clearInterval(countdown);
-            // submitPrompt();
+            submitPrompt();
         }
     }, 1000);
 };

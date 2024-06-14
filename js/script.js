@@ -168,6 +168,7 @@ socket.addEventListener("open", () =>
 );
 socket.addEventListener("message", (event) => {
     const { type, room, payload, imageUrl } = JSON.parse(event.data);
+    console.log(type, room, payload, imageUrl);
     roomValue = getRoomParam();
     if (roomValue && room != roomValue) return;
     switch (type) {
@@ -207,7 +208,7 @@ socket.addEventListener("message", (event) => {
         case "setDuration":
             localStorage.setItem("duration", `"${payload.duration}"`);
             duration = payload.duration;
-            console.log(duration)
+            console.log(duration);
             break;
         case "error":
             alert(
@@ -220,7 +221,8 @@ socket.addEventListener("message", (event) => {
             toggleVideo(generatingImageVideo);
             promptSubmitButton.classList.remove("fade-in-out");
             promptSubmitButton.disabled = false;
-            promptSubmitButton.innerHTML = promptSubmitButton.getAttribute("alt");
+            promptSubmitButton.innerHTML =
+                promptSubmitButton.getAttribute("alt");
             startTimer();
             break;
         default:

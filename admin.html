@@ -5,6 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Prompt Battle</title>
         <script src="js/admin.js" defer></script>
+        <style>
+            body.is-connected {
+                background-color: rgba(0, 255, 0, 0.1);
+            }
+        </style>
     </head>
     <body>
         <fieldset id="controls">
@@ -44,9 +49,7 @@
                     <button onclick="updateScore()">Update Score</button>
                 </div>
                 <div>
-                    <button id="resetButton" onclick="reset()">
-                        Reset
-                    </button>
+                    <button id="resetButton" onclick="reset()">Reset</button>
                 </div>
                 <div>
                     <input id="duration" type="number" value="60" />

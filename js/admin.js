@@ -10,16 +10,21 @@ const elements = {
 };
 
 let socket;
+let isSocketConnected = false;
 
 // Function to connect or reconnect the WebSocket
 const connectWebSocket = () => {
     socket = new WebSocket("wss://prompt-battle-server.glitch.me");
 
     socket.addEventListener("open", () => {
+        isSocketConnected = true;
+        document.body.classList.add("is-connected");
         console.log("WebSocket connection established.");
     });
 
     socket.addEventListener("close", () => {
+        isSocketConnected = false;
+        document.body.classList.remove("is-connected");
         console.log("WebSocket connection closed. Reconnecting...");
         setTimeout(connectWebSocket, 1000); // Reconnect after 1 second
     });

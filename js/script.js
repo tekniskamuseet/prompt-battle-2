@@ -78,7 +78,7 @@ const submitName = () => {
 };
 
 let countdown;
-const duration = 60;
+let duration = 60;
 
 const startTimer = () => {
     let timeLeft = duration;

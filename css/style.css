@@ -55,7 +55,8 @@ body {
     --color_lighter: color-mix(in srgb, var(--color) 30%, white);
     height: 100vh;
     margin: 0;
-    font-size: 5vw;
+    font-size: 3.6vw;
+    line-height:1.15;
     overflow: hidden;
     white-space: nowrap;
     text-wrap: balance;
@@ -92,7 +93,7 @@ h2 {
 /* Header */
 header {
     pointer-events: none;
-    font-size: 2vw;
+    font-size: 1.8vw;
     height: var(--height);
     line-height: var(--height);
     text-transform: uppercase;
@@ -150,11 +151,11 @@ input,
     color: var(--color_light);
 }
 
-.textarea {
+/* .textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
 ::placeholder {
     color: var(--color_dark);
@@ -214,7 +215,7 @@ img#generatedImage {
     clear: both;
     line-height: var(--height);
     height: var(--height);
-    font-size: 2vw;
+    font-size: 1.8vw;
     width: 100vw;
     box-sizing: border-box;
     text-align: center;

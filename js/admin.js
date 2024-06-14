@@ -1,6 +1,7 @@
 const getElement = (id) => document.getElementById(id);
 
 const elements = {
+    room: "room",
     duration: "duration",
     p1_score: "p1_score",
     p2_score: "p2_score",
@@ -31,8 +32,7 @@ const setDuration = () =>
     });
 
 const send = (type, data) => {
-    console.log(type, data)
-    socket.send(JSON.stringify({ type: type, payload: data }));
+    socket.send(JSON.stringify({ type: type, room: room.value, payload: data }));
 };
 
 // Initialize elements with DOM elements

@@ -65,6 +65,13 @@ playerName.textContent = `Spelare #${pid}:`;
 
 const socket = new WebSocket("wss://prompt-battle-server.glitch.me");
 
+function getRoomParam() {
+    const url = window.location.href;
+    const urlObj = new URL(url);
+    const room = urlObj.searchParams.get("room");
+    return room;
+}
+
 const submitName = () => {
     const name = nameInput.value.trim();
     if (!name) {
@@ -160,7 +167,9 @@ socket.addEventListener("open", () =>
     console.log("WebSocket connection established.")
 );
 socket.addEventListener("message", (event) => {
-    const { type, payload, imageUrl } = JSON.parse(event.data);
+    const { type, room, payload, imageUrl } = JSON.parse(event.data);
+    roomValue = getRoomParam();
+    if (roomValue && room != roomValue) return;
     switch (type) {
         case "imageGenerated":
             generatedImage.src = imageUrl;

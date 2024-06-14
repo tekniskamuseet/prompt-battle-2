@@ -9,11 +9,29 @@ const elements = {
     p2_color: "p2_color",
 };
 
-const socket = new WebSocket("wss://prompt-battle-server.glitch.me");
+let socket;
 
-socket.addEventListener("open", () => {
-    console.log("WebSocket connection established.");
-});
+// Function to connect or reconnect the WebSocket
+const connectWebSocket = () => {
+    socket = new WebSocket("wss://prompt-battle-server.glitch.me");
+
+    socket.addEventListener("open", () => {
+        console.log("WebSocket connection established.");
+    });
+
+    socket.addEventListener("close", () => {
+        console.log("WebSocket connection closed. Reconnecting...");
+        setTimeout(connectWebSocket, 1000); // Reconnect after 1 second
+    });
+
+    socket.addEventListener("error", (error) => {
+        console.error("WebSocket error:", error);
+        socket.close(); // Close the socket to trigger reconnect
+    });
+};
+
+// Initial connection
+connectWebSocket();
 
 const reset = () => send("reset");
 const updateColor = () =>
@@ -32,7 +50,12 @@ const setDuration = () =>
     });
 
 const send = (type, data) => {
-    socket.send(JSON.stringify({ type: type, room: room.value, payload: data }));
+    const room = elements.room.value;
+    if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: type, room: room, payload: data }));
+    } else {
+        console.error("WebSocket is not open. Cannot send message:", { type, data });
+    }
 };
 
 // Initialize elements with DOM elements

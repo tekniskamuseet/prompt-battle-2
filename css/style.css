@@ -166,7 +166,7 @@ input,
     color: var(--color_dark);
     opacity: 0.5;
     position: relative;
-    top: calc(50% -(var(--height) / 2));
+    top: 50%;
     transform: translateY(-50%);
     text-align: center;
 }

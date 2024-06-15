@@ -134,7 +134,7 @@ const resetForm = () => {
 const submitPrompt = () => {
     const promptText = promptInput.textContent.trim();
     if (!promptText) {
-        aalert("Fyll i din prompt.");
+        alert("Fyll i din prompt.");
         return;
     }
     toggleAudio(generatingImageAudio, "in");
@@ -186,7 +186,6 @@ socket.addEventListener("message", (event) => {
             location.reload();
             break;
         case "start":
-            alert("")
             submitPrompt();
             break;
         case "updateColor":

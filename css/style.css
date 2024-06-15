@@ -9,7 +9,6 @@ body[data-pid="2"] {
     --color: var(--p2_color, blue);
 }
 
-body button,
 body button {
     background-color: var(--color_dark);
     color: var(--color_light);
@@ -56,7 +55,7 @@ body {
     height: 100vh;
     margin: 0;
     font-size: 3.6vw;
-    line-height:1.15;
+    line-height: 1.15;
     overflow: hidden;
     white-space: nowrap;
     text-wrap: balance;
@@ -166,6 +165,10 @@ input,
     content: attr(placeholder);
     color: var(--color_dark);
     opacity: 0.5;
+    position: relative;
+    top: calc(50% -(var(--height) / 2));
+    transform: translateY(-50%);
+    text-align: center;
 }
 
 [disabled] {
@@ -236,8 +239,8 @@ img#generatedImage {
     background-position: center center;
 }
 
-#generatingImageVideo:not(.show){
-    display:none;
+#generatingImageVideo:not(.show) {
+    display: none;
 }
 
 .footer:has(> :nth-child(2)) > * {

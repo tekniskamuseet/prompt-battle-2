@@ -39,6 +39,7 @@ const connectWebSocket = () => {
 connectWebSocket();
 
 const reset = () => send("reset");
+const start = () => send("start");
 const updateColor = () =>
     send("updateColor", {
         p1_color: elements.p1_color.value,

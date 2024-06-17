@@ -150,6 +150,10 @@ input,
     color: var(--color_light);
 }
 
+.textarea {
+    overflow-y: scroll;
+}
+
 /* .textarea {
     display: flex;
     align-items: center;
